@@ -1,0 +1,15 @@
+from sqlalchemy import create_engine
+from sqlalchemy.orm import DeclarativeBase, sessionmaker
+
+engine = create_engine("sqlite:///auth.db")
+
+class Base(DeclarativeBase):
+    pass
+
+SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
+
+def get_session():
+    session = SessionLocal()
+    yield session
+    session.close()
+    
